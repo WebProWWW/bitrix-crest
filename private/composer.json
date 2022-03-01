@@ -1,0 +1,27 @@
+{
+  "name": "webprowww/bitrix-crest",
+  "description": "Bitrix24 REST API",
+  "minimum-stability": "stable",
+  "license": "BSD-3-Clause",
+  "require": {
+    "php": ">=5.6",
+    "bitrix/crest": "1.36"
+  },
+  "repositories": [{
+    "type": "package",
+    "package": {
+      "name": "bitrix/crest",
+      "version": "1.36",
+      "dist": {
+        "url": "https://github.com/bitrix-tools/crest/releases/download/v1.36/crest-1.36.zip",
+        "type": "zip"
+      }
+    }
+  }],
+  "autoload": {
+    "classmap": [
+      "vendor/bitrix/crest/src/crest.php",
+      "BitrixCRM.php"
+    ]
+  }
+}

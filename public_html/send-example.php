@@ -1,21 +1,5 @@
+<?php
 
-# Bitrix24 REST API
-
-## Вызов REST с использованием входящего вебхука
-
-### Установка
-
-Перейдите в папку `/path/to/private` и выполните следующие команды:
-
-```shell
-cd /path/to/private
-
-composer install
-```
-
-### Пример отправки заявки
-
-```php
 require __DIR__ . '/../private/vendor/autoload.php';
 
 header('Content-Type: application/json; charset=utf-8');
@@ -32,17 +16,8 @@ function post($key, $default='') {
     return $default;
 }
 
-// Вебхук (обязательный параметр)
-// ссылка указана для примера,
-// в ЦРМ вам нужно создать новую ссылку или скопировать существующую
-$webHookUrl = 'https://xxx.bitrix24.ru/rest/1/douasdqdsxSWgc3mgc1/';
+$bitrix = new BitrixCRM('https://xxx.bitrix24.ru/rest/1/douasdqdsxSWgc3mgc1/', 8);
 
-// id источника (id можно узнать в ЦРМ) 
-$sourceId = 8;
-
-$bitrix = new BitrixCRM($webHookUrl, $sourceId);
-
-// Поля из формы на сайте
 $bitrix->name           = post('name', 'Заявка');
 $bitrix->phone          = post('phone');
 $bitrix->email          = post('email');
@@ -53,13 +28,11 @@ $bitrix->utmCampaign    = post('utm_campaign');
 $bitrix->utmContent     = post('utm_content');
 $bitrix->utmTerm        = post('utm_term');
 
-// Пользовательское поле (Поля сущностей ЦРМ)
 $bitrix->setField('UF_CRM_1622708417377', 'custom field value');
 
-// Статус отправки
 $out = ['status' => 'error'];
 if ( $bitrix->send() ) {
     $out['status'] = 'ok';
 }
+
 echo json_encode($out);
-```
